@@ -1,42 +1,53 @@
-/*
-    Main File to launch the launcher and compile
-*/
-
-#include "librairies.h"
+#include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
+
+#include "librairies.h"
+
+// Ajoutez la définition de createRoundWindow ici (voir étape 1 pour le code complet)
 
 int main(int argc, const char** argv) {
-    // Create a New Window
-    SDL_Window* window = createWindow("Launcher", 800, 600);
+    // Initialisation SDL
+    SDL_Init(SDL_INIT_VIDEO);
 
-    // Make Window Transparent
-    setWindowTransparent(window);
+    // Création de la fenêtre avec des bords arrondis
+    SDL_Window* window = createRoundWindow("Launcher", 960, 540);
+    if (!window) {
+        SDL_Quit();
+        return 1;
+    }
 
+    // Créer un renderer pour la fenêtre
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (!renderer) {
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
+    }
+
+    // Gestion des événements SDL
     bool isRunning = true;
     SDL_Event event;
-    while (isRunning)
-    {
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_QUIT)
-            {
+    while (isRunning) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
                 isRunning = false;
-            }
-
-            // If the user press the escape button
-            if (event.type == SDL_KEYDOWN)
-            {
-                if (event.key.keysym.sym == SDLK_ESCAPE)
-                {
+            } else if (event.type == SDL_KEYDOWN) {
+                if (event.key.keysym.sym == SDLK_ESCAPE) {
                     isRunning = false;
                 }
             }
         }
+
+        // Ajout d'une image
+        addImage(renderer, "Images/Background.png", 0, 0, 960, 540);
+
+        // Mettre à jour l'affichage
+        SDL_RenderPresent(renderer);
     }
 
-    // Clean up
+    // Nettoyage
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 

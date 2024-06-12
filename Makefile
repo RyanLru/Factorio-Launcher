@@ -4,8 +4,8 @@ CXX := g++
 # Compiler flags
 CXXFLAGS := -std=c++11 -Wall -Wextra
 
-# SDL libraries
-SDL_LIBS := -lSDL2 -lSDL2_image -lSDL2_ttf
+# SDL libraries and X11
+SDL_LIBS := -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx -lX11 -lXext
 
 # Source files
 SRCS := $(wildcard *.cpp)
@@ -25,7 +25,7 @@ $(TARGET): $(OBJS)
 
 # Rule to compile source files
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@ `sdl2-config --cflags`
 
 # Clean rule
 clean:

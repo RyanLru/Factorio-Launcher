@@ -7,10 +7,17 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <X11/Xlib.h>
+#include <SDL2/SDL_syswm.h>
+#include <X11/Xlib.h>
+#include <X11/extensions/shape.h>
+
+
 
 // Function to create a screen with borderless
 SDL_Window* createWindow(const char* title, int width, int height)
-{
+{   
+    SDL_Init(SDL_INIT_VIDEO);
     SDL_Window* window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_BORDERLESS);
     if (window == NULL)
     {
@@ -20,15 +27,28 @@ SDL_Window* createWindow(const char* title, int width, int height)
     return window;
 }
 
-// Function to make background transparent to see the desktop backrgound
+// Function to make background transparent to see the desktop backrgound for rendering
 void setWindowTransparent(SDL_Window* window)
 {
     SDL_SetWindowOpacity(window, 0.0);
 }
 
-// Function to add image
-void addImage(SDL_Renderer* renderer, const char* path, int x, int y)
+// Function to create a renderer
+SDL_Renderer* createRenderer(SDL_Window* window)
 {
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (renderer == NULL)
+    {
+        printf("Error: %s\n", SDL_GetError());
+        return NULL;
+    }
+    return renderer;
+}
+
+// Function to add image
+void addImage(SDL_Renderer* renderer, const char* path, int x, int y, int w, int h)
+{
+    // Function to load png image with SDL_Image
     SDL_Surface* surface = IMG_Load(path);
     if (surface == NULL)
     {
@@ -36,6 +56,7 @@ void addImage(SDL_Renderer* renderer, const char* path, int x, int y)
         return;
     }
 
+    // Function to create a texture from the surface
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
     if (texture == NULL)
     {
@@ -43,14 +64,56 @@ void addImage(SDL_Renderer* renderer, const char* path, int x, int y)
         return;
     }
 
-    SDL_Rect rect;
-    rect.x = x;
-    rect.y = y;
-    rect.w = surface->w;
-    rect.h = surface->h;
-
+    // Function to render the texture
+    SDL_Rect rect = { x, y, w, h };
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 
+    // Clean up
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
 }
+
+// Fonction pour créer une fenêtre avec des bords arrondis sous X11
+SDL_Window* createRoundWindow(const char* title, int width, int height){
+    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Window* window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL);
+
+    // On Utilise X11 pour obtenir le handle de la fenêtre
+    SDL_SysWMinfo info;
+    SDL_VERSION(&info.version);
+    if (!SDL_GetWindowWMInfo(window, &info)) {
+        printf("Error: %s\n", SDL_GetError());
+        return NULL;
+    }
+
+    // On récupère le display
+    Display* display = info.info.x11.display;
+    if (!display) {
+        printf("Error: %s\n", SDL_GetError());
+        return NULL;
+    }
+
+    // On récupère le handle de la fenêtre
+    Window xWindow = info.info.x11.window;
+    if (!xWindow) {
+        printf("Error: %s\n", SDL_GetError());
+        return NULL;
+    }
+
+    // On crée un masque pour les bords arrondis
+    XRectangle rectangles[4] = {
+        { 0, 0, width, 10 },
+        { 0, 10, 10, height - 20 },
+        { width - 10, 10, 10, height - 20 },
+        { 0, height - 10, width, 10 }
+    };
+
+    // On applique le masque
+    XShapeCombineRectangles(display, xWindow, ShapeBounding, 0, 0, rectangles, 4, ShapeSet, YXBanded);
+
+    // On affiche la fenêtre
+    SDL_ShowWindow(window);
+
+    return window;
+}
+
