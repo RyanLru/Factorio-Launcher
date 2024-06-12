@@ -7,11 +7,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include <X11/Xlib.h>
-#include <SDL2/SDL_syswm.h>
-#include <X11/Xlib.h>
-#include <X11/extensions/shape.h>
-
 
 
 // Function to create a screen with borderless
@@ -73,47 +68,4 @@ void addImage(SDL_Renderer* renderer, const char* path, int x, int y, int w, int
     SDL_DestroyTexture(texture);
 }
 
-// Fonction pour créer une fenêtre avec des bords arrondis sous X11
-SDL_Window* createRoundWindow(const char* title, int width, int height){
-    SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window* window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL);
-
-    // On Utilise X11 pour obtenir le handle de la fenêtre
-    SDL_SysWMinfo info;
-    SDL_VERSION(&info.version);
-    if (!SDL_GetWindowWMInfo(window, &info)) {
-        printf("Error: %s\n", SDL_GetError());
-        return NULL;
-    }
-
-    // On récupère le display
-    Display* display = info.info.x11.display;
-    if (!display) {
-        printf("Error: %s\n", SDL_GetError());
-        return NULL;
-    }
-
-    // On récupère le handle de la fenêtre
-    Window xWindow = info.info.x11.window;
-    if (!xWindow) {
-        printf("Error: %s\n", SDL_GetError());
-        return NULL;
-    }
-
-    // On crée un masque pour les bords arrondis
-    XRectangle rectangles[4] = {
-        { 0, 0, width, 10 },
-        { 0, 10, 10, height - 20 },
-        { width - 10, 10, 10, height - 20 },
-        { 0, height - 10, width, 10 }
-    };
-
-    // On applique le masque
-    XShapeCombineRectangles(display, xWindow, ShapeBounding, 0, 0, rectangles, 4, ShapeSet, YXBanded);
-
-    // On affiche la fenêtre
-    SDL_ShowWindow(window);
-
-    return window;
-}
 

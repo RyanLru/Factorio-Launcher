@@ -5,7 +5,7 @@ CXX := g++
 CXXFLAGS := -std=c++11 -Wall -Wextra
 
 # SDL libraries and X11
-SDL_LIBS := -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx -lX11 -lXext
+SDL_LIBS := -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx
 
 # Source files
 SRCS := $(wildcard *.cpp)

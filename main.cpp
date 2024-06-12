@@ -11,7 +11,7 @@ int main(int argc, const char** argv) {
     SDL_Init(SDL_INIT_VIDEO);
 
     // Création de la fenêtre avec des bords arrondis
-    SDL_Window* window = createRoundWindow("Launcher", 960, 540);
+    SDL_Window* window = createWindow("Factorio Launcher", 960, 540);
     if (!window) {
         SDL_Quit();
         return 1;
