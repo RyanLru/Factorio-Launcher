@@ -2,7 +2,7 @@
 CXX := g++
 
 # Compiler flags
-CXXFLAGS := -std=c++11 -Wall -Wextra
+CXXFLAGS := -Wall -Wextra
 
 # SDL libraries and X11
 SDL_LIBS := -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx

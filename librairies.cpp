@@ -68,4 +68,52 @@ void addImage(SDL_Renderer* renderer, const char* path, int x, int y, int w, int
     SDL_DestroyTexture(texture);
 }
 
+// Function to dectection if button is clicked
+bool isButtonClicked(SDL_Event event, int x, int y, int w, int h)
+{
+    if (event.type == SDL_MOUSEBUTTONDOWN)
+    {
+        int xMouse, yMouse;
+        SDL_GetMouseState(&xMouse, &yMouse);
+        if (xMouse >= x && xMouse <= x + w && yMouse >= y && yMouse <= y + h)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Function to add button
+void addButton(SDL_Renderer* renderer, const char* path, int x, int y, int w, int h)
+{
+    // Function to load png image with SDL_Image
+    SDL_Surface* surface = IMG_Load(path);
+    if (surface == NULL)
+    {
+        printf("Error: %s\n", IMG_GetError());
+        return;
+    }
+
+    // Function to create a texture from the surface
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    if (texture == NULL)
+    {
+        printf("Error: %s\n", SDL_GetError());
+        return ;
+    }
+
+    // Function to render the texture
+    SDL_Rect rect = { x, y, w, h };
+    SDL_RenderCopy(renderer, texture, NULL, &rect);
+
+    // Clean up
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+
+    return;
+}
+
+
+
+
 

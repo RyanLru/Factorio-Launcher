@@ -13,6 +13,8 @@ SDL_Window* createWindow(const char* title, int width, int height);
 void setWindowTransparent(SDL_Window* window);
 SDL_Renderer* createRenderer(SDL_Window* window);
 void addImage(SDL_Renderer* renderer, const char* path, int x, int y, int w, int h);
+bool isButtonClicked(SDL_Event event, int x, int y, int w, int h);
+void addButton(SDL_Renderer* renderer, const char* path, int x, int y, int w, int h);
 
 
 #endif // !LIBRAIRIES_H
