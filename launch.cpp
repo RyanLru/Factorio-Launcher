@@ -198,28 +198,12 @@ void Transfert(int selection){
         // On déplace les mods du répertoire du modpack vers le répertoire des mods
         moveModsfromFolder(modpackPath);
 
-        // On lance steam
-        checkSteam();
-    }
-}
-
-// Fonction pour vérifier si steam est lancé, si non on le lance avec cette commande : 
-/*
-#!/bin/bash
-env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia steam
-
-*/
-bool checkSteam() {
-    // On vérifie si steam est lancé
-    if (system("pgrep steam") == 0) {
-        return true;
     }
 
-    // On lance steam
-    system("env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia steam");
-
-    return true;
+    // On lance factorio
+    launchFactorio();
 }
+
 
 // On vérifie si factorio est lancé, si non return false
 bool checkFactorio() {
@@ -231,16 +215,17 @@ bool checkFactorio() {
     return false;
 }
 
-// Fonction pour lancé factorio avec cette commande :
+// On Lance factorio avec la commande
 /*
 #!/bin/bash
-steam steam://run/427520
+__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia steam steam://rungameid/427520 &
 */
-
-bool runFactorio() {
-    // On lance factorio
-    system("steam steam://run/427520");
-
-    return true;
+void launchFactorio() {
+    if (checkFactorio()) {
+        std::cout << "Factorio est déjà lancé." << std::endl;
+        return;
+    }
+    // On lance factorio en arrière-plan
+    system("__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia steam steam://rungameid/427520 &");
+    return;
 }
-
