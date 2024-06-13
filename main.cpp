@@ -27,14 +27,17 @@ int main(int argc, const char** argv) {
         return 1;
     }
 
+    // Ajout de l'icône de la fenêtre
+    addIcon(window, "Images/Logo.png");
+
     // Chargement des images de boutons
     addImage(renderer, "Images/Background.png", 0, 0, 960, 540);
     addButton(renderer, "Images/Close.png", 910, 5, 35, 35);
     addButton(renderer, "Images/Minimize.png", 870, 3, 37, 37);
-    addButton(renderer, "Images/K2SE.png", 20, 30, 506, 111);
-    addButton(renderer, "Images/Exotic Industries.png", 20, 150, 338, 109);
-    addButton(renderer, "Images/Pyanodons.png", 20, 270, 299, 108);
-    addButton(renderer, "Images/Vanilla.png", 20, 390, 239, 116);
+    addButton(renderer, "Images/K2SE.png", 20, 30, 510, 110);
+    addButton(renderer, "Images/Exotic Industries.png", 20, 150, 510, 110);
+    addButton(renderer, "Images/Pyanodons.png", 20, 270, 510, 110);
+    addButton(renderer, "Images/Vanilla.png", 20, 390, 510, 110);
 
     // Coordonnées du logo de sélection
     int x = -64; // Valeur initiale en dehors de l'écran pour qu'il ne soit pas visible au début
@@ -42,6 +45,10 @@ int main(int argc, const char** argv) {
 
     // Entier pour enregistrer la sélection
     int selection = 0;
+
+    // Système de Pages
+    int page = 1;
+    int page_max = 4;
 
     // Gestion des événements SDL
     bool isRunning = true;
@@ -67,29 +74,25 @@ int main(int argc, const char** argv) {
             }
 
             // Si on Clique sur K2SE : Change le logo de place pour l'aligner avec le bouton
-            if (isButtonClicked(event, 20, 30, 506, 111)) {
-                x = 530;
+            if (isButtonClicked(event, 20, 30, 510, 110)) {
                 y = 55;
                 selection = 1;
             }
 
             // Si on Clique sur Exotic Industries : Change le logo de place pour l'aligner avec le bouton
-            if (isButtonClicked(event, 20, 150, 338, 109)) {
-                x = 530;
+            if (isButtonClicked(event, 20, 150, 510, 110)) {
                 y = 175;
                 selection = 2;
             }
 
             // Si on Clique sur Pyanodon : Change le logo de place pour l'aligner avec le bouton
-            if (isButtonClicked(event, 20, 270, 299, 108)) {
-                x = 530;
+            if (isButtonClicked(event, 20, 270, 510, 110)) {
                 y = 295;
                 selection = 3;
             }
 
             // Si on Clique sur Vanilla : Change le logo de place pour l'aligner avec le bouton
-            if (isButtonClicked(event, 20, 390, 239, 116)) {
-                x = 530;
+            if (isButtonClicked(event, 20, 390, 510, 110)) {
                 y = 415;
                 selection = 4;
             }
@@ -103,6 +106,28 @@ int main(int argc, const char** argv) {
                 isRunning = false;
             }
 
+            // Si on clique sur la flèche de gauche
+            if (isButtonClicked(event, 470, 463, 39, 39)) {
+                if(page > 1){
+                    page--;
+                }
+                // Sinon on retourne à la dernière page
+                else{
+                    page = page_max;
+                }
+            }
+
+            // Si on clique sur la flèche de droite
+            if (isButtonClicked(event, 545, 463, 39, 39)) {
+                if(page < page_max){
+                    page++;
+                }
+                // Sinon on retourne à la première page
+                else{
+                    page = 1;
+                }
+            }
+
         }
 
         // Rendu des éléments fixes (une seule fois)
@@ -111,13 +136,20 @@ int main(int argc, const char** argv) {
         addImage(renderer, "Images/Play.png", 635, 440, 310, 75);
         addButton(renderer, "Images/Close.png", 910, 5, 35, 35);
         addButton(renderer, "Images/Minimize.png", 870, 3, 37, 37);
-        addButton(renderer, "Images/K2SE.png", 20, 30, 506, 111);
-        addButton(renderer, "Images/Exotic Industries.png", 20, 150, 338, 109);
-        addButton(renderer, "Images/Pyanodons.png", 20, 270, 299, 108);
-        addButton(renderer, "Images/Vanilla.png", 20, 390, 239, 116);
+        if(page == 1){
 
+            addButton(renderer, "Images/K2SE.png", 20, 30, 510, 110);
+            addButton(renderer, "Images/Exotic Industries.png", 20, 150, 510, 110);
+            addButton(renderer, "Images/Pyanodons.png", 20, 270, 510, 110);
+            addButton(renderer, "Images/Vanilla.png", 20, 390, 510, 110);
+        }
         // Rendu des logos
-        addImage(renderer, "Images/Logo.png", x, y, 64, 64);
+        addImage(renderer, "Images/Logo.png", 540, y, 64, 64);
+        addImage(renderer, "Images/Arrow-left.png", 470, 463, 39, 39);
+        addImage(renderer, "Images/Arrow-right.png", 545, 463, 39, 39);
+
+        // Ajout d'un Texte avec le numéro de la page
+        writeText(renderer, std::to_string(page).c_str(), 520, 470, 20);
 
         // Mettre à jour l'affichage
         SDL_RenderPresent(renderer);

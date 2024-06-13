@@ -15,6 +15,8 @@ SDL_Renderer* createRenderer(SDL_Window* window);
 void addImage(SDL_Renderer* renderer, const char* path, int x, int y, int w, int h);
 bool isButtonClicked(SDL_Event event, int x, int y, int w, int h);
 void addButton(SDL_Renderer* renderer, const char* path, int x, int y, int w, int h);
+void writeText(SDL_Renderer* renderer, const char* text, int x, int y, int size);
+void addIcon(SDL_Window* window, const char* path);
 
 
 #endif // !LIBRAIRIES_H

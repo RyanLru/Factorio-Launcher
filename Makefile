@@ -13,6 +13,7 @@ SRCS := $(wildcard *.cpp)
 # Object files
 OBJS := $(SRCS:.cpp=.o)
 
+
 # Executable name
 TARGET := Factorio-Launcher
 

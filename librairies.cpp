@@ -113,6 +113,68 @@ void addButton(SDL_Renderer* renderer, const char* path, int x, int y, int w, in
     return;
 }
 
+// Fonction pour écrire un texte sur l'écran
+void writeText(SDL_Renderer* renderer, const char* text, int x, int y, int size)
+{
+    // Initialisation de SDL_ttf
+    TTF_Init();
+
+    // Charger la police
+    TTF_Font* font = TTF_OpenFont("/usr/share/fonts/TTF/DejaVuSans-Bold.ttf", size);
+    if (font == NULL)
+    {
+        printf("Error: %s\n", TTF_GetError());
+        return;
+    }
+
+    // Créer une surface de texte
+    SDL_Color color = { 255, 255, 255 };
+    SDL_Surface* surface = TTF_RenderText_Solid(font, text, color);
+    if (surface == NULL)
+    {
+        printf("Error: %s\n", TTF_GetError());
+        return;
+    }
+
+    // Créer une texture de texte
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    if (texture == NULL)
+    {
+        printf("Error: %s\n", SDL_GetError());
+        return;
+    }
+
+    // Créer un rectangle pour le texte
+    SDL_Rect rect = { x, y, surface->w, surface->h };
+
+    // Afficher le texte
+    SDL_RenderCopy(renderer, texture, NULL, &rect);
+
+    // Nettoyer
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+    TTF_CloseFont(font);
+    TTF_Quit();
+}
+
+// Function to add icon to the window
+void addIcon(SDL_Window* window, const char* path)
+{
+    // Function to load png image with SDL_Image
+    SDL_Surface* surface = IMG_Load(path);
+    if (surface == NULL)
+    {
+        printf("Error: %s\n", IMG_GetError());
+        return;
+    }
+
+    // Function to set the icon
+    SDL_SetWindowIcon(window, surface);
+
+    // Clean up
+    SDL_FreeSurface(surface);
+}
+
 
 
 
