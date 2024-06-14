@@ -27,6 +27,7 @@ namespace fs = std::filesystem;
 bool checkModpacks(std::string& modpackName, std::string& modpackPath) {
     // Retrieve the username
     const char* username = getenv("USER");
+    std::string usernameStr(username);
     if (!username) {
         std::cerr << "Error: unable to retrieve the username." << std::endl;
         return false;
@@ -188,7 +189,7 @@ void Transfer(int selection, bool QOL){
         moveModstoFolder();
 
         // Path to the modpack directory
-        std::string modpackPath = std::string("/home/") + getenv("USER") + "/Desktop/Project/Factorio-Launcher/ModPacks/";
+        std::string modpackPath = std::string("/home/") + getenv("USER") + "/Bureau/Projet/Factorio-Launcher/ModPacks/";
 
         // Append the modpack name
         switch (selection) {

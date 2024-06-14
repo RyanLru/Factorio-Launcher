@@ -85,27 +85,27 @@ int main(int argc, const char** argv) {
                 SDL_MinimizeWindow(window);
             }
 
-            if (isButtonClicked(event, 20, 30, 510, 110)) {
+            if (isButtonClicked(event, 20, 30, 510, 110) && page == 1) {
                 y = 55;
                 selection = 1;
             }
 
-            if (isButtonClicked(event, 20, 150, 510, 110)) {
+            if (isButtonClicked(event, 20, 150, 510, 110) && page == 1) {
                 y = 175;
                 selection = 2;
             }
 
-            if (isButtonClicked(event, 20, 270, 510, 110)) {
+            if (isButtonClicked(event, 20, 270, 510, 110) && page == 1) {
                 y = 295;
                 selection = 3;
             }
 
-            if (isButtonClicked(event, 20, 390, 510, 110)) {
+            if (isButtonClicked(event, 20, 390, 510, 110) && page == 1) {
                 y = 415;
                 selection = 4;
             }
 
-            if (isButtonClicked(event, 20, 30, 510, 110)) {
+            if (isButtonClicked(event, 20, 30, 510, 110) && page == 2) {
                 y = 55;
                 selection = 5;
             }
