@@ -1,6 +1,7 @@
 // Fichier pour gérer et parser les dossiers à déplacer
 
 #include "launch.h"
+#include "librairies.h"
 
 #include <filesystem>
 #include <fstream>
@@ -173,6 +174,9 @@ void Transfert(int selection){
     }
 
     if(selection != 0){
+        // Avant le déplacement on Supprime les fichiers communs présent dans le répertoire des mods
+        supprimerFichiersCommuns(std::string("/home/") + getenv("USER") + "/.factorio/mods");
+
         // On Déplace les mods du répertoire des mods vers le répertoire du modpack
         moveModstoFolder();
 
@@ -197,6 +201,9 @@ void Transfert(int selection){
 
         // On déplace les mods du répertoire du modpack vers le répertoire des mods
         moveModsfromFolder(modpackPath);
+
+        // Ajout des mods du modpack QOL
+        moveQOLtoFolder();
 
     }
 
