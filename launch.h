@@ -8,7 +8,7 @@
 bool checkModpacks(std::string& modpackName, std::string& modpackPath);
 bool moveModstoFolder();
 bool moveModsfromFolder(std::string modpackPath);
-void Transfert(int selection);
+void Transfert(int selection, bool QOL);
 bool checkFactorio();
 void launchFactorio();
 

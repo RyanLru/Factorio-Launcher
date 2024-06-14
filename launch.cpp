@@ -164,7 +164,7 @@ bool moveModsfromFolder(std::string modpackPath) {
 }
 
 // Fonction pour lancer un transfert : Argument : Selection
-void Transfert(int selection){
+void Transfert(int selection, bool QOL){
     // Si on a sélectionné un modpack
 
     // Vérifier si factorio est lancé
@@ -203,7 +203,10 @@ void Transfert(int selection){
         moveModsfromFolder(modpackPath);
 
         // Ajout des mods du modpack QOL
-        moveQOLtoFolder();
+        if(QOL){
+            moveQOLtoFolder();
+        }
+
 
     }
 

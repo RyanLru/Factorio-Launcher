@@ -50,6 +50,8 @@ int main(int argc, const char** argv) {
     int page = 1;
     int page_max = 4;
 
+    bool QOL = true;
+
     // Gestion des événements SDL
     bool isRunning = true;
     bool PlayHover = false;
@@ -101,11 +103,13 @@ int main(int argc, const char** argv) {
             // Si on clique sur le bouton de lancement
             if (isButtonClicked(event, 635, 440, 310, 75)) {
                 // Lancer le transfert
-                Transfert(selection);
+                Transfert(selection, QOL);
 
                 // Fermer la fenêtre
                 isRunning = false;
             }
+
+            
 
             /* Si on clique sur la flèche de gauche
             if (isButtonClicked(event, 470, 463, 39, 39)) {
@@ -140,6 +144,11 @@ int main(int argc, const char** argv) {
                 }
             }
 
+            // Si on clique sur le bouton QOL
+            if (isButtonClicked(event, 715, 390, 155, 35)) {
+                QOL = !QOL;
+            }
+
         }
 
         // Rendu des éléments fixes (une seule fois)
@@ -163,6 +172,15 @@ int main(int argc, const char** argv) {
         }
         // Rendu des logos
         addImage(renderer, "Images/Logo.png", 540, y, 64, 64);
+
+        // Rendu Coche QOL
+        if(QOL){
+            addButton(renderer, "Images/QOL_true.png", 715, 390, 155, 35);
+        }
+        else{
+            addButton(renderer, "Images/QOL_false.png", 715, 390, 155, 35);
+        }
+
         
         //addImage(renderer, "Images/Arrow-left.png", 470, 463, 39, 39);
         //addImage(renderer, "Images/Arrow-right.png", 545, 463, 39, 39);
