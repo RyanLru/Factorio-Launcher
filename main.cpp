@@ -100,6 +100,12 @@ int main(int argc, const char** argv) {
                 selection = 4;
             }
 
+            // Si on clique sur Angel-Bob : Change le logo de place pour l'aligner avec le bouton
+            if (isButtonClicked(event, 20, 30, 510, 110)) {
+                y = 55;
+                selection = 5;
+            }
+
             // Si on clique sur le bouton de lancement
             if (isButtonClicked(event, 635, 440, 310, 75)) {
                 // Lancer le transfert
@@ -111,8 +117,8 @@ int main(int argc, const char** argv) {
 
             
 
-            /* Si on clique sur la flèche de gauche
-            if (isButtonClicked(event, 470, 463, 39, 39)) {
+            // Si on clique sur la flèche de gauche
+            if (isButtonClicked(event, 495, 505, 32, 32)) {
                 if(page > 1){
                     page--;
                 }
@@ -123,7 +129,7 @@ int main(int argc, const char** argv) {
             }
 
             // Si on clique sur la flèche de droite
-            if (isButtonClicked(event, 545, 463, 39, 39)) {
+            if (isButtonClicked(event, 570, 505, 32, 32)) {
                 if(page < page_max){
                     page++;
                 }
@@ -132,7 +138,7 @@ int main(int argc, const char** argv) {
                     page = 1;
                 }
             }
-            */
+            
 
            // Si On Passe notre souris sur le bouton play 
             if (event.type == SDL_MOUSEMOTION) {
@@ -170,6 +176,9 @@ int main(int argc, const char** argv) {
             addButton(renderer, "Images/Pyanodons.png", 20, 270, 510, 110);
             addButton(renderer, "Images/Vanilla.png", 20, 390, 510, 110);
         }
+        if(page == 2){
+            addButton(renderer, "Images/Angel-Bob.png", 20, 30, 510, 110);
+        }
         // Rendu des logos
         addImage(renderer, "Images/Logo.png", 540, y, 64, 64);
 
@@ -182,11 +191,11 @@ int main(int argc, const char** argv) {
         }
 
         
-        //addImage(renderer, "Images/Arrow-left.png", 470, 463, 39, 39);
-        //addImage(renderer, "Images/Arrow-right.png", 545, 463, 39, 39);
+        addImage(renderer, "Images/Arrow-left.png", 495, 505, 32, 32);
+        addImage(renderer, "Images/Arrow-right.png", 570, 505, 32, 32);
 
         // Ajout d'un Texte avec le numéro de la page
-        //writeText(renderer, std::to_string(page).c_str(), 520, 470, 20);
+        writeText(renderer, std::to_string(page).c_str(), 540, 510, 20);
 
         // Mettre à jour l'affichage
         SDL_RenderPresent(renderer);

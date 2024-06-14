@@ -197,6 +197,9 @@ void Transfert(int selection, bool QOL){
             case 4:
                 modpackPath += "Vanilla";
                 break;
+            case 5:
+                modpackPath += "Angel-Bob";
+                break;
         }
 
         // On déplace les mods du répertoire du modpack vers le répertoire des mods
