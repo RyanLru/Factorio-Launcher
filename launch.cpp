@@ -247,5 +247,5 @@ void launchFactorio() {
         return;
     }
     // Launch Factorio in the background
-    system("steam steam://rungameid/427520 &");
+    system("__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia steam steam://rungameid/427520 &");
 }
