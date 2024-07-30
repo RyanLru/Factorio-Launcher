@@ -1,24 +1,3 @@
-# SDL Utilities
-
-This repository contains a set of utility functions for working with SDL (Simple DirectMedia Layer). These functions help create and manage SDL windows, render images and text, handle button clicks, and manage file operations for a specific project involving Factorio mods.
-
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Creating a Window](#creating-a-window)
-  - [Setting Window Transparency](#setting-window-transparency)
-  - [Creating a Renderer](#creating-a-renderer)
-  - [Adding an Image](#adding-an-image)
-  - [Handling Button Clicks](#handling-button-clicks)
-  - [Adding a Button](#adding-a-button)
-  - [Writing Text](#writing-text)
-  - [Setting Window Icon](#setting-window-icon)
-  - [Deleting Common Files](#deleting-common-files)
-  - [Moving QOL Mods](#moving-qol-mods)
-- [Dependencies](#dependencies)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
